@@ -2,7 +2,7 @@ from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
 import django_anysign
-from uuidfield import UUIDField
+
 
 class SignatureType(django_anysign.SignatureType):
     docusign_template_id = models.CharField(
@@ -11,6 +11,8 @@ class SignatureType(django_anysign.SignatureType):
         blank=True,
     )
 
+    class Meta:
+        app_label = 'django_docusign_demo'
 
 class Signature(django_anysign.SignatureFactory(SignatureType)):
     document = models.FileField(
@@ -43,13 +45,8 @@ class Signature(django_anysign.SignatureFactory(SignatureType)):
         auto_now_add=True,
     )
 
-    #: Identifier in Django's internal database.
-    anysign_internal_id = UUIDField(
-        verbose_name=_('ID in internal database'),
-        auto=True,
-        hyphenate=True,
-        blank=True
-        )
+    class Meta:
+        app_label = 'django_docusign_demo'
 
     def signature_documents(self):
         """Return list of documents (file wrappers) to sign.

@@ -88,7 +88,6 @@ class CreateSignatureView(FormView):
             document=self.request.FILES['document'],
             document_title=self.cleaned_data['title'],
         )
-        print 'signature dir', dir(signature)
         signature.save()
         # Add signers.
         for position, signer_data in enumerate(self.cleaned_data['signers']):
@@ -150,6 +149,7 @@ class CreateSignatureTemplateView(CreateSignatureView):
             signature_type=signature_type,
             document_title=self.cleaned_data['title'],
         )
+
         # Add signers.
         for position, signer_data in enumerate(self.cleaned_data['signers']):
             signature.signers.create(

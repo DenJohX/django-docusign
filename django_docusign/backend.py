@@ -19,6 +19,7 @@ class DocuSignBackend(django_anysign.SignatureBackend):
             url_namespace=url_namespace,
         )
         client_kwargs = self.get_client_kwargs(**kwargs)
+
         #: Instance of :class:`~pydocusign.client.DocuSignClient`
         self.docusign_client = pydocusign.DocuSignClient(**client_kwargs)
 
@@ -200,7 +201,9 @@ class DocuSignBackend(django_anysign.SignatureBackend):
         This method calls ``save()`` on ``signature``.
 
         """
-        if signature.signature_type.docusign_template_id:
+
+        if signature.signature_type.docusign_template_id \
+            and signature.signature_type.docusign_template_id != u'None':
             envelope = self.create_signature_from_template(
                 signature, callback_url, subject, blurb)
         else:
