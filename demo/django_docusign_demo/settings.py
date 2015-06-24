@@ -43,7 +43,6 @@ INSTALLED_APPS = (
     'django_anysign',
     # Third-parties.
     'formsetfield',
-    'south',
     # Standard Django applications.
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -87,6 +86,14 @@ NOSE_ARGS = [
 ]
 SOUTH_TESTS_MIGRATE = False
 
+
+MIDDLEWARE_CLASSES = (
+    'django.middleware.common.CommonMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+)
 
 LOGGING = {
     'version': 1,

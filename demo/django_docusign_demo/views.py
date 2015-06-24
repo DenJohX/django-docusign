@@ -83,17 +83,20 @@ class CreateSignatureView(FormView):
         (signature_type, created) = models.SignatureType.objects.get_or_create(
             signature_backend_code='docusign',
             docusign_template_id='')
-        signature = models.Signature.objects.create(
+        signature = models.Signature(
             signature_type=signature_type,
             document=self.request.FILES['document'],
             document_title=self.cleaned_data['title'],
         )
+        print 'signature dir', dir(signature)
+        signature.save()
         # Add signers.
         for position, signer_data in enumerate(self.cleaned_data['signers']):
             signature.signers.create(
                 full_name=signer_data['name'],
                 email=signer_data['email'],
                 signing_order=position + 1,  # Position starts at 1.
+                signature_backend_id=''
             )
         # Create signature, backend side.
         self.create_signature(signature)
